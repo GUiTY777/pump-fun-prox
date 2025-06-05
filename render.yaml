@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: pump-fun-proxy
+    runtime: python
+    buildCommand: ""
+    startCommand: python proxy.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
