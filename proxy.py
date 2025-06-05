@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__)
 
-DEXSCREENER_URL = "https://api.dexscreener.com/latest/dex/pairs/solana"
+DEXSCREENER_URL = "https://api.dexscreener.com/latest/dex/search?q=solana"
 MORALIS_BASE_URL = "https://solana-gateway.moralis.io/token/mainnet"
 
 HEADERS = {
@@ -18,7 +18,7 @@ def get_token_price(token_address):
         response.raise_for_status()
         data = response.json()
         return data.get("usdPrice")
-    except Exception as e:
+    except Exception:
         return None
 
 @app.route("/tokens", methods=["GET"])
@@ -29,7 +29,7 @@ def get_tokens():
         tokens = response.json().get("pairs", [])
         result = []
 
-        for token in tokens[:20]:  # ограничим до 20 токенов для скорости
+        for token in tokens[:20]:
             if "baseToken" in token and token["baseToken"].get("address"):
                 token_address = token["baseToken"]["address"]
                 token_symbol = token["baseToken"].get("symbol", "")
