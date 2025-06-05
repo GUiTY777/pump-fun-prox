@@ -30,6 +30,8 @@ def get_tokens():
         result = []
 
         for token in tokens[:100]:
+            if token.get("chainId") != "solana":
+                continue
             if "baseToken" in token and token["baseToken"].get("address"):
                 token_address = token["baseToken"]["address"]
                 token_symbol = token["baseToken"].get("symbol", "")
@@ -51,4 +53,4 @@ def index():
     return {"status": "Proxy is working"}, 200
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=8000, debug=True)
